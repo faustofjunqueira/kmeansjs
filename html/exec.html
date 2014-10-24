@@ -1,8 +1,61 @@
-<div class="col-md-8 box fundo-caixa-render">
-	<canvas class="box-render"></canvas>
+<div class="col-md-8">
+	<tabset>
+		<tab heading="Renderização">
+			Aqui mostrará os pontinhos dançando
+			<canvas class="box-render"></canvas>
+		</tab>
+		<tab heading="Dados da Amostra">
+			Nada ainda
+		</tab>
+	</tabset>
 </div>
+
 <div class="col-md-4">
-	<form class="">
-		
+	<form class="form-horizontal">
+		<fieldset>
+
+			<!-- Form Name -->
+			<legend>
+				Dados
+			</legend>
+
+			<!-- Text input-->
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="kgrupos">K grupos</label>
+				<div class="col-md-8">
+					<input id="kgrupos" type="number" name="kgrupos" placeholder="numero de cluster" class="form-control input-md" required="" type="text">
+					<span class="help-block">um numero 0 &lt; k &lt; inf</span>
+				</div>
+			</div>
+
+			<!-- Text input-->
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="epocas">Épocas</label>
+				<div class="col-md-8">
+					<input id="epocas" type="number" name="epocas" placeholder="Número máximos de epocas" class="form-control input-md" required="" type="text">
+					<span class="help-block">É o numero máximo de loop ate convergir</span>
+				</div>
+			</div>
+
+			<!-- File Button -->
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="arquivo">Arquivo CSV</label>
+				<div class="col-md-4">
+					<input id="arquivo" name="arquivo" class="input-file" type="file" required="">
+				</div>
+			</div>
+
+			<!-- Button -->
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="exec"></label>
+				<div class="col-md-4">
+					<button id="exec" name="exec" class="btn btn-primary">
+						Executar
+					</button>
+				</div>
+			</div>
+
+		</fieldset>
 	</form>
+
 </div>
