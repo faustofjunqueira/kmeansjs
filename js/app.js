@@ -1,4 +1,16 @@
-var aplicativo = angular.module('kmeans', ['ui.bootstrap']);
+var aplicativo = angular.module('kmeans', ['ui.bootstrap', 'ngRoute']);
 
-angular.module('kmeans.core',[]);
-angular.module('kmeans.draw'['kmeans.core']);
+aplicativo.config(['$routeProvider',
+function($routeProvider) {
+
+	$routeProvider.when("/", {
+		templateUrl : 'html/inicial.html',
+		controller : 'InicialCtrl'
+
+	}).when("/exec", {
+		templateUrl : 'html/exec.html',
+		controller : 'ExecCtrl'
+	}).otherwise({
+		redirectTo : '/'
+	});
+}]);
