@@ -12,8 +12,6 @@ function inicializaCentroides(K, M, MinNumber, MaxNumber) {
 			centroides[i][j] = Math.random() * ((((i * K) + j) % 2 == 0) ? MinNumber : MaxNumber) ;
 		};
 	};
-	console.log("aqui");
-	console.log(centroides);
 	return centroides;
 }
 
