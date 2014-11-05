@@ -11,7 +11,7 @@
 </div>
 
 <div class="col-md-4">
-	<form class="form-horizontal">
+	<form class="form-horizontal" accept-charset="UTF-8" enctype="multipart/form-data">
 		<fieldset>
 
 			<!-- Form Name -->
@@ -23,16 +23,16 @@
 			<div class="form-group">
 				<label class="col-md-4 control-label" for="kgrupos">K grupos</label>
 				<div class="col-md-8">
-					<input id="kgrupos" type="number" name="kgrupos" placeholder="numero de cluster" class="form-control input-md" required="" type="text">
+					<input id="kgrupos" type="number" name="kgrupos" placeholder="numero de cluster" class="form-control input-md" required="" type="text" ng-model="formInput.k">
 					<span class="help-block">um numero 0 &lt; k &lt; inf</span>
 				</div>
-			</div>
+			</div>	
 
 			<!-- Text input-->
 			<div class="form-group">
 				<label class="col-md-4 control-label" for="epocas">Épocas</label>
 				<div class="col-md-8">
-					<input id="epocas" type="number" name="epocas" placeholder="Número máximos de epocas" class="form-control input-md" required="" type="text">
+					<input id="epocas" type="number" name="epocas" placeholder="Número máximos de epocas" class="form-control input-md" required="" type="text" ng-model='formInput.epocas'>
 					<span class="help-block">É o numero máximo de loop ate convergir</span>
 				</div>
 			</div>
@@ -41,7 +41,7 @@
 			<div class="form-group">
 				<label class="col-md-4 control-label" for="arquivo">Arquivo CSV</label>
 				<div class="col-md-4">
-					<input id="arquivo" name="arquivo" class="input-file" type="file" required="">
+					<input type="file" on-read-file="mostraConteudo($fileContent)" />
 				</div>
 			</div>
 
@@ -49,13 +49,12 @@
 			<div class="form-group">
 				<label class="col-md-4 control-label" for="exec"></label>
 				<div class="col-md-4">
-					<button id="exec" name="exec" class="btn btn-primary">
+					<button id="exec" name="exec" class="btn btn-primary" ng-click="executar()">
 						Executar
 					</button>
 				</div>
 			</div>
-
 		</fieldset>
 	</form>
-
+	{{ ConteudoCSV }}
 </div>

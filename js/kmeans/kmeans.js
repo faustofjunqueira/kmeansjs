@@ -86,11 +86,13 @@ function recalculaCentroides(Centroides, Grupos, Pontos) {
  * Entrada:
  *  Pontos: Matriz NxM, onde N é o numero de pontos e M é o numero de dimensões.
  *  K : numero de grupos
+ *	Epocas : numero de loops
+ *  callback(Pontos,r.Centroides, r.Grupos)
  * Saida:
  *  Grupos: é o vetor que diz em qual grupo o ponto esta. a relação entre Grupo e Ponto é o índice.
  *  Centroides: é uma matriz KxM, onde o k é o numero de grupo e M é a dimenção do pontos, inclusive dos centroides.
  */
-function kmeans(Pontos, K, Epocas) {
+function kmeans(Pontos, K, Epocas, callback) {
 
 	if (Pontos == null || Pontos.length == 0) {
 		// Fazer Cuspir uma Exception;
@@ -134,6 +136,8 @@ function kmeans(Pontos, K, Epocas) {
 			break;
 		}
 		
+		callback(Pontos,r.Centroides, r.Grupos);
+
 		if(epocaAtual >= Epocas && Epocas != -1) break;
 		
 	};

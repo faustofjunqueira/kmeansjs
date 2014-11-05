@@ -1,15 +1,28 @@
 angular.module('kmeans')
 
-.controller('ExecCtrl',['$scope', 'RenderService', function($scope, RenderService){
+
+.controller('ExecCtrl',['$scope', 'RenderService', 'CSVService', function($scope, RenderService ,CSVService){
         /**
          * Cria uma lista de pontos a serem renderizados
          * @param posicoes: matriz com as posiçes x e y de todos os pontos a serem renderizados
          * @returns {Array}: a lista de pontos a serem renderizados
          */
+
+        $scope.formInput = {epocas:0, k : 0};
+        var Pontos;
+
+        $scope.mostraConteudo = function($fileContent){
+            $scope.ConteudoCSV = $fileContent;
+            console.log($scope.ConteudoCSV);
+        };
+
+        $scope.executar = function(){
+            Pontos = CSVService.textoParaMatriz($scope.ConteudoCSV);
+        };
+
         this.criaListaPontos = function(matriz, listaClusters) {
             var i;
             var listaPontos = [];
-
             for(i = 0; i < matriz.length; i++) {
                 var posicaoAtual = {
                     x: matriz[i][0],
