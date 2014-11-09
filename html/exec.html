@@ -1,60 +1,98 @@
 <div class="col-md-8">
-	<canvas id="canvas-pontos"></canvas>
-	<tabset>
-		<tab heading="Renderização">
-			Aqui mostrará os pontinhos dançando
-		</tab>
-		<tab heading="Dados da Amostra">
-			Nada ainda
-		</tab>
-	</tabset>
+    <canvas id="canvas-pontos"></canvas>
+    <tabset>
+        <tab heading="Renderização">
+            Aqui mostrará os pontinhos dançando
+        </tab>
+
+        <tab heading="Dados da Amostra">
+            <p class="lead">Resultado da Clusterização</p>
+            <div class="col-md-6">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Grupos</th>
+                        <th>Pontos</th>
+                    </tr>
+                    </thead>
+                    <tbody ng-repeat="ponto in pontos">
+                    <tr>
+                        <td>{{grupos[$index]}}</td>
+                        <td>{{ponto}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Grupos</th>
+                        <th>Centroide</th>
+                    </tr>
+                    </thead>
+                    <tbody ng-repeat="centroide in centroides">
+                    <tr>
+                        <td>{{$index}}</td>
+                        <td>{{centroide}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </tab>
+    </tabset>
 </div>
 
 <div class="col-md-4">
-	<form class="form-horizontal" accept-charset="UTF-8" enctype="multipart/form-data">
-		<fieldset>
+    <form class="form-horizontal" accept-charset="UTF-8" enctype="multipart/form-data">
+        <fieldset>
 
-			<!-- Form Name -->
-			<legend>
-				Dados
-			</legend>
+            <!-- Form Name -->
+            <legend>
+                Dados
+            </legend>
 
-			<!-- Text input-->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="kgrupos">K grupos</label>
-				<div class="col-md-8">
-					<input id="kgrupos" type="number" name="kgrupos" placeholder="numero de cluster" class="form-control input-md" required="" type="text" ng-model="formInput.k">
-					<span class="help-block">um numero 0 &lt; k &lt; inf</span>
-				</div>
-			</div>	
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="kgrupos">K grupos</label>
 
-			<!-- Text input-->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="epocas">Épocas</label>
-				<div class="col-md-8">
-					<input id="epocas" type="number" name="epocas" placeholder="Número máximos de epocas" class="form-control input-md" required="" type="text" ng-model='formInput.epocas'>
-					<span class="help-block">É o numero máximo de loop ate convergir</span>
-				</div>
-			</div>
+                <div class="col-md-8">
+                    <input id="kgrupos" type="number" name="kgrupos" placeholder="numero de cluster"
+                           class="form-control input-md" required="" type="text" ng-model="formInput.k">
+                    <span class="help-block">um numero 0 &lt; k &lt; inf</span>
+                </div>
+            </div>
 
-			<!-- File Button -->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="arquivo">Arquivo CSV</label>
-				<div class="col-md-4">
-					<input type="file" on-read-file="mostraConteudo($fileContent)" />
-				</div>
-			</div>
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="epocas">Épocas</label>
 
-			<!-- Button -->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="exec"></label>
-				<div class="col-md-4">
-					<button id="exec" name="exec" class="btn btn-primary" ng-click="executar()">
-						Executar
-					</button>
-				</div>
-			</div>
-		</fieldset>
-	</form>
-	{{ ConteudoCSV }}
+                <div class="col-md-8">
+                    <input id="epocas" type="number" name="epocas" placeholder="Número máximos de epocas"
+                           class="form-control input-md" required="" type="text" ng-model='formInput.epocas'>
+                    <span class="help-block">É o numero máximo de loop ate convergir</span>
+                </div>
+            </div>
+
+            <!-- File Button -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="arquivo">Arquivo CSV</label>
+
+                <div class="col-md-4">
+                    <input type="file" on-read-file="mostraConteudo($fileContent)"/>
+                </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="exec"></label>
+
+                <div class="col-md-4">
+                    <button id="exec" name="exec" class="btn btn-primary" ng-click="executar()">
+                        Executar
+                    </button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
 </div>

@@ -13,49 +13,38 @@ angular.module('kmeans')
 
         $scope.mostraConteudo = function($fileContent){
             $scope.ConteudoCSV = $fileContent;
-            console.log($scope.ConteudoCSV);
-        };
-
-        $scope.executar = function(){
-            Pontos = CSVService.textoParaMatriz($scope.ConteudoCSV);
-        };
-
-        this.criaListaPontos = function(matriz, listaClusters) {
-            var i;
-            var listaPontos = [];
-            for(i = 0; i < matriz.length; i++) {
-                var posicaoAtual = {
-                    x: matriz[i][0],
-                    y: matriz[i][1]
-                };
-                var pontoNovo = new Ponto(global.ponto.tipo.estatico, posicaoAtual);
-
-                listaPontos.push(pontoNovo);
-            }
-
-            for(i = 0; i < listaClusters.length; i++) {
-                var posicaoAtual = {
-                    x: listaClusters[i][0],
-                    y: listaClusters[i][1]
-                };
-
-                var clusterNovo = new Ponto(global.ponto.tipo.dinamico, posicaoAtual);
-
-                listaPontos.push(clusterNovo);
-            }
-
-            return listaPontos;
         };
 
         // caputura o canvas onde serao renderizados os pontos
         var canvas = document.getElementById(global.html.canvas.canvasPontos);
+        RenderService.setCanvas(canvas);
 
 
-        var matriz = [[0, 1], [8, 15], [81, 125], [111, 115], [32, 27], [18, 65], [81, 12]];
-        var listaCluster = [[100, 101], [141, 17], [8, 99]];
 
-        var pontos = this.criaListaPontos(matriz, listaCluster);
+        var inicializaKmeans = function(c){
+            RenderService.renderizaMatriz(Pontos,"orange");
+            RenderService.renderizaMatriz(c,"blue");
+        };
 
-        //renderiza os pontos
-        RenderService.renderiza(pontos, canvas);
+        var executandoKmeans = function(c){
+            RenderService.limpa();
+            RenderService.renderizaMatriz(Pontos,"orange");
+            RenderService.renderizaMatriz(c,"blue");
+        };
+
+        var finalKmeans = function(c,g){
+            $scope.pontos = Pontos;
+            $scope.grupos = g;
+            $scope.centroides = c;
+        };
+
+        $scope.executar = function(){
+            try{
+                Pontos = CSVService.textoParaMatriz($scope.ConteudoCSV);
+                kmeans(Pontos,$scope.formInput.k,$scope.formInput.epocas,inicializaKmeans,executandoKmeans,finalKmeans);
+            }catch (e){
+                alert(e);
+            }
+        };
+
 }]);

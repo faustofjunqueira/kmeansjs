@@ -6,6 +6,11 @@ angular.module('kmeans')
 
 .service('RenderService', function() {
 
+        this.setCanvas = function(canvas) {
+            this.canvas = canvas;
+            this.ctx = canvas.getContext("2d");
+        };
+
         /*
             Renderiza pontos na tela
                 * precisa de um canvas
@@ -17,21 +22,49 @@ angular.module('kmeans')
                 * escolher cor para os pontos estaticos e os pontos dinamicos
          */
 
-        this.renderiza = function(listaPontos, canvas) {
-            var ctx = canvas.getContext("2d");
+        this.renderiza = function(listaPontos) {
             var i;
-
             for(i = 0; i < listaPontos.length; i++) {
 
                 if(listaPontos[i].tipo == global.ponto.tipo.estatico) {
-                    ctx.fillStyle = "orange";
-                    ctx.fillRect(listaPontos[i].posicao.x, listaPontos[i].posicao.y, 5, 5);
+                    this.ctx.fillStyle = "orange";
+                    this.ctx.fillRect(listaPontos[i].posicao.x, listaPontos[i].posicao.y, 5, 5);
                 }
                 else {
-                    ctx.fillStyle = "blue";
-                    ctx.fillRect(listaPontos[i].posicao.x, listaPontos[i].posicao.y, 5, 5);
+                    this.ctx.fillStyle = "blue";
+                    this.ctx.fillRect(listaPontos[i].posicao.x, listaPontos[i].posicao.y, 5, 5);
                 }
             }
         };
+
+        this.renderizaMatriz = function(matriz,cor) {
+            var i;
+            for(i = 0; i < matriz.length; i++) {
+                this.ctx.fillStyle = cor;
+                this.ctx.fillRect(matriz[i][0], matriz[i][1], 5, 5);
+            }
+        };
+
+        this.limpa = function(){
+            this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+        };
+
+        /*
+        var criaListaPontos = function(matriz) {
+         var i;
+         var listaPontos = [];
+         for(i = 0; i < matriz.length; i++) {
+         var posicaoAtual = {
+         x: matriz[i][0],
+         y: matriz[i][1]
+         };
+         var pontoNovo = new Ponto(global.ponto.tipo.estatico, posicaoAtual);
+
+         listaPontos.push(pontoNovo);
+         }
+
+
+         return listaPontos;
+         };*/
 
     });

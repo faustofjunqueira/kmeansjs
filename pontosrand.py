@@ -1,5 +1,5 @@
 import random
 
 for i in range(50):
-	print( str(random.uniform(1, 10)) + ","+str(random.uniform(1, 10)) )
+	print( str(random.randint(0, 300)) + ","+str(random.randint(0,150)) )
 

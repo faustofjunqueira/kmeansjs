@@ -10,8 +10,8 @@ function inicializaCentroides(K, M, MinNumber, MaxNumber) {
 		centroides[i] = new Array(M);
 		for (var j = 0; j < M; j++) {
 			centroides[i][j] = Math.random() * ((((i * K) + j) % 2 == 0) ? MinNumber : MaxNumber) ;
-		};
-	};
+		}
+	}
 	return centroides;
 }
 
@@ -26,8 +26,8 @@ function buscarMinMax(P) {
 				r.max = P[i][j];
 			if (P[i][j] < r.min)
 				r.min = P[i][j];
-		};
-	};
+		}
+	}
 	return r;
 }
 
@@ -35,7 +35,7 @@ function distancia(p1, p2) {
 	var somatorio = 0;
 	for (var i = 0; i < p1.length; i++) {
 		somatorio += (p1[i] - p2[i]) * (p1[i] - p2[i]);
-	};
+	}
 	return Math.sqrt(somatorio);
 }
 
@@ -51,7 +51,7 @@ function centroideMaisPerto(ponto, centroides) {
 			distanciaParaCentroide = outraDistancia;
 			r = i;
 		}
-	};
+	}
 	return r;
 }
 
@@ -61,24 +61,24 @@ function recalculaCentroides(Centroides, Grupos, Pontos) {
 		numeroDePontosPorCentroides[i] = 0;
 		for (var j = 0; j < Centroides[i].length; j++) {
 			Centroides[i][j] = 0;
-		};
-	};
+		}
+	}
 
-	for (var i = 0; i < Grupos.length; i++) {
+	for (i = 0; i < Grupos.length; i++) {
 		numeroDePontosPorCentroides[Grupos[i]]++;
-	};
+	}
 
-	for (var i = 0; i < Pontos.length; i++) {
+	for (i = 0; i < Pontos.length; i++) {
 		for (var j = 0; j < Pontos[i].length; j++) {
 			Centroides[Grupos[i]][j] += Pontos[i][j];
-		};
-	};
+		}
+	}
 
-	for (var i = 0; i < Centroides.length; i++) {
+	for ( i = 0; i < Centroides.length; i++) {
 		for (var j = 0; j < Centroides[i].length; j++) {
 			Centroides[i][j] /= numeroDePontosPorCentroides[i];
-		};
-	};
+		}
+	}
 	return Centroides;
 }
 
@@ -92,7 +92,7 @@ function recalculaCentroides(Centroides, Grupos, Pontos) {
  *  Grupos: é o vetor que diz em qual grupo o ponto esta. a relação entre Grupo e Ponto é o índice.
  *  Centroides: é uma matriz KxM, onde o k é o numero de grupo e M é a dimenção do pontos, inclusive dos centroides.
  */
-function kmeans(Pontos, K, Epocas, callback) {
+function kmeans(Pontos, K, Epocas, inicio,executando,final) {
 
 	if (Pontos == null || Pontos.length == 0) {
 		// Fazer Cuspir uma Exception;
@@ -111,10 +111,9 @@ function kmeans(Pontos, K, Epocas, callback) {
 	var MinMax = buscarMinMax(Pontos);
 	var epocaAtual = 0;
 	r.Centroides = inicializaCentroides(K, M, MinMax.min, MinMax.max);
-	
-	console.log("Centroides Iniciais:");
-	console.log(r.Centroides);
-	
+
+	inicio(r.Centroides);
+
 	while (true) {
 		epocaAtual++;
 		
@@ -127,20 +126,21 @@ function kmeans(Pontos, K, Epocas, callback) {
 				r.Grupos[i] = centroideEncontrado;
 				trocou = true;
 			}
-		};
+		}
 
 		if (trocou) {
 			r.Centroides = recalculaCentroides(r.Centroides, r.Grupos, Pontos);
-			console.log(epocaAtual.toString()+") "+JSON.stringify(r.Centroides));
 		} else {
 			break;
 		}
 		
-		callback(Pontos,r.Centroides, r.Grupos);
+		executando(r.Centroides, r.Grupos);
 
 		if(epocaAtual >= Epocas && Epocas != -1) break;
 		
-	};
+	}
+
+	final(r.Centroides, r.Grupos);
 
 	return r;
 }
