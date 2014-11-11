@@ -1,46 +1,49 @@
 <div class="col-md-8">
-    <canvas id="canvas-pontos"></canvas>
-    <tabset>
-        <tab heading="Renderização">
-            Aqui mostrará os pontinhos dançando
-        </tab>
+    <alert ng-repeat="alert in alertas" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 
-        <tab heading="Dados da Amostra">
-            <p class="lead">Resultado da Clusterização</p>
-            <div class="col-md-6">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th>Grupos</th>
-                        <th>Pontos</th>
-                    </tr>
-                    </thead>
-                    <tbody ng-repeat="ponto in pontos">
-                    <tr>
-                        <td>{{grupos[$index]}}</td>
-                        <td>{{ponto}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-6">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th>Grupos</th>
-                        <th>Centroide</th>
-                    </tr>
-                    </thead>
-                    <tbody ng-repeat="centroide in centroides">
-                    <tr>
-                        <td>{{$index}}</td>
-                        <td>{{centroide}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </tab>
-    </tabset>
+    <button class="btn btn-default" ng-click="escondePontos = !escondePontos">Visualizar Renderizaçao</button>
+    <hr>
+    <div id="div-canvas" collapse="escondePontos">
+        <canvas id="canvas-pontos" width="500" height="250"></canvas>
+    </div>
+
+    <button class="btn btn-default" ng-click="escondeResultado = !escondeResultado">Visualizar Resultado</button>
+    <hr>
+    <div collapse="escondeResultado">
+        <p class="lead">Resultado da Clusterização</p>
+        <div class="col-md-6">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Grupos</th>
+                    <th>Pontos</th>
+                </tr>
+                </thead>
+                <tbody ng-repeat="ponto in pontos">
+                <tr>
+                    <td>{{grupos[$index]}}</td>
+                    <td>{{ponto}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Grupos</th>
+                    <th>Centroide</th>
+                </tr>
+                </thead>
+                <tbody ng-repeat="centroide in centroides">
+                <tr>
+                    <td>{{$index}}</td>
+                    <td>{{centroide}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <div class="col-md-4">

@@ -8,6 +8,14 @@ angular.module('kmeans')
          * @returns {Array}: a lista de pontos a serem renderizados
          */
 
+        $scope.escondePontos = true;
+        $scope.escondeResultado = true;
+
+        var alertaAguarde = { type: 'danger', msg: 'Por favor, aguarde enquanto o algoritmo esta executando...' };
+        var alertaTerminou = { type: 'success', msg: 'O algoritmo do kmeans terminou sua execuçao!' };
+
+        $scope.alertas = [];
+
         $scope.formInput = {epocas:0, k : 0};
         var Pontos;
 
@@ -15,13 +23,13 @@ angular.module('kmeans')
             $scope.ConteudoCSV = $fileContent;
         };
 
-        // caputura o canvas onde serao renderizados os pontos
-        var canvas = document.getElementById(global.html.canvas.canvasPontos);
+        var canvas = document.getElementById("div-canvas").children[0];
         RenderService.setCanvas(canvas);
 
 
 
         var inicializaKmeans = function(c){
+            RenderService.limpa();
             RenderService.renderizaMatriz(Pontos,"orange");
             RenderService.renderizaMatriz(c,"blue");
         };
@@ -36,9 +44,11 @@ angular.module('kmeans')
             $scope.pontos = Pontos;
             $scope.grupos = g;
             $scope.centroides = c;
+            $scope.escondeResultado = false;
         };
 
-        $scope.executar = function(){
+        $scope.executar = function() {
+            $scope.escondePontos = false;
             try{
                 Pontos = CSVService.textoParaMatriz($scope.ConteudoCSV);
                 kmeans(Pontos,$scope.formInput.k,$scope.formInput.epocas,inicializaKmeans,executandoKmeans,finalKmeans);
@@ -46,5 +56,4 @@ angular.module('kmeans')
                 alert(e);
             }
         };
-
 }]);

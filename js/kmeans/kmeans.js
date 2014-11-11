@@ -114,9 +114,10 @@ function kmeans(Pontos, K, Epocas, inicio,executando,final) {
 
 	inicio(r.Centroides);
 
-	while (true) {
+	//while (true) {
+	var intervalo = setInterval(function() {
+		console.log("fazendo kmeans....");
 		epocaAtual++;
-		
 		trocou = false;
 
 		// Para todo os pontos, vejo em qual centroide ele esta
@@ -131,16 +132,18 @@ function kmeans(Pontos, K, Epocas, inicio,executando,final) {
 		if (trocou) {
 			r.Centroides = recalculaCentroides(r.Centroides, r.Grupos, Pontos);
 		} else {
-			break;
+			clearInterval(intervalo);
 		}
-		
+
 		executando(r.Centroides, r.Grupos);
 
-		if(epocaAtual >= Epocas && Epocas != -1) break;
-		
-	}
-
+		if(epocaAtual >= Epocas && Epocas != -1) {
+			clearInterval(intervalo);
+		}
+	}, 500);
+	//}
 	final(r.Centroides, r.Grupos);
+
 
 	return r;
 }
