@@ -51,7 +51,7 @@ angular.module('kmeans')
             $scope.escondePontos = false;
             try{
                 Pontos = CSVService.textoParaMatriz($scope.ConteudoCSV);
-                kmeans(Pontos,$scope.formInput.k,$scope.formInput.epocas,inicializaKmeans,executandoKmeans,finalKmeans);
+                kmeans($scope, Pontos,$scope.formInput.k,$scope.formInput.epocas,inicializaKmeans,executandoKmeans,finalKmeans);
             }catch (e){
                 alert(e);
             }

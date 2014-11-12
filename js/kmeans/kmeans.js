@@ -92,7 +92,7 @@ function recalculaCentroides(Centroides, Grupos, Pontos) {
  *  Grupos: é o vetor que diz em qual grupo o ponto esta. a relação entre Grupo e Ponto é o índice.
  *  Centroides: é uma matriz KxM, onde o k é o numero de grupo e M é a dimenção do pontos, inclusive dos centroides.
  */
-function kmeans(Pontos, K, Epocas, inicio,executando,final) {
+function kmeans($scope, Pontos, K, Epocas, inicio,executando,final) {
 
 	if (Pontos == null || Pontos.length == 0) {
 		// Fazer Cuspir uma Exception;
@@ -132,17 +132,24 @@ function kmeans(Pontos, K, Epocas, inicio,executando,final) {
 		if (trocou) {
 			r.Centroides = recalculaCentroides(r.Centroides, r.Grupos, Pontos);
 		} else {
+			$scope.$apply(function () {
+				final(r.Centroides, r.Grupos);
+
+			});
 			clearInterval(intervalo);
 		}
 
 		executando(r.Centroides, r.Grupos);
 
 		if(epocaAtual >= Epocas && Epocas != -1) {
+			$scope.$apply(function () {
+				final(r.Centroides, r.Grupos);
+
+			});
 			clearInterval(intervalo);
 		}
 	}, 500);
 	//}
-	final(r.Centroides, r.Grupos);
 
 
 	return r;
